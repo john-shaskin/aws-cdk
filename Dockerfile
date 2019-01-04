@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6.5
 RUN apt-get update && \
     apt-get -y install make g++ rsync git zip && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
