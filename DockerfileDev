@@ -1,0 +1,24 @@
+FROM node:8.15.0-alpine
+
+RUN apk add --update \
+    bash \
+    git \
+    rsync \
+    zip \
+    python3 \
+    python3-dev \
+    py3-setuptools \
+ && rm -rf /var/cache/apk/* \
+ && npm install -g lerna@3.3
+
+# USER node
+RUN mkdir -p /app
+WORKDIR /app
+
+# Add lerna aliases
+RUN echo "alias lr='lerna run --stream --scope \$(node -p \"require(\\\"./package.json\\\").name\")'" >> ~/.bashrc && \
+    echo "alias lb='lr build'" >> ~/.bashrc && \
+    echo "alias lt='lr test'" >> ~/.bashrc && \
+    echo "alias lw='lr watch'" >> ~/.bashrc
+
+CMD ["bash"]
